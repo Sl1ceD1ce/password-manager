@@ -1,0 +1,1 @@
+This is a password-manager constructed using the MERN stack (Mongodb, Express, React, Node.js) for the course COMP6841 Extended Cybersecurity Engineering for my university assignment. Have a look through my codebase and enjoy. Let me know of any improvements I could make in terms of the security of the code.
