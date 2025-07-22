@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@types/valid-url": "^1.0.7",
+    "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
@@ -23,6 +24,7 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",

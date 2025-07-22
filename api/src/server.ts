@@ -6,7 +6,7 @@ import User from "../models/User.js";
 import Post from "../models/Post.js";
 import jwt, { JwtPayload } from "jsonwebtoken";
 const { sign, verify } = jwt;
-import { sha256 } from "js-sha256";
+import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
 import { validateContents } from "./helpers.js";
 import * as dotenv from "dotenv";
@@ -30,6 +30,7 @@ app.use(json());
 // loading secrets and env variables
 const key = process.env.KEY;
 const secret = process.env.SECRET;
+const saltRounds = 10;
 
 if (!key || !secret) {
   throw new Error("Missing required environment variables: KEY and/or SECRET");
@@ -40,7 +41,8 @@ connect(key);
 app.post("/register", async (req, res) => {
   const { username } = req.body;
   let { password } = req.body;
-  password = sha256(password); // change to bcrypt algorithm
+  const salt = bcrypt.genSaltSync(saltRounds);
+  password = bcrypt.hashSync(password, salt);
 
   try {
     const userDoc = await User.create({ username, password });
@@ -52,12 +54,11 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  const hashedPassword = sha256(password); // change to bcrypt algorithm
 
   const userDoc = await User.findOne({ username });
   if (userDoc === null) {
     return res.status(400).json({ error: "invalid username" });
-  } else if (hashedPassword === userDoc.password) {
+  } else if (bcrypt.compareSync(password, userDoc.password)) {
     sign(
       { username, id: userDoc._id },
       secret,
