@@ -45,8 +45,8 @@ app.post("/register", async (req, res) => {
   try {
     const userDoc = await User.create({ username, password });
     return res.json("ok");
-  } catch (e) {
-    return res.status(400).json(e);
+  } catch (e: any) {
+    return res.status(400).json("The username or password is not valid");
   }
 });
 
