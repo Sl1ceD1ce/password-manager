@@ -16,8 +16,8 @@ export function validateContents(
   } else if (!validateUsername(username)) {
     throw new Error("Username is too short");
   } else if (!validatePassword(password)) {
-    throw new Error("Password must be at least 12 characters long");
-  } 
+    throw new Error("Password must be at least 8 characters long");
+  }
 
   return;
 }
@@ -29,7 +29,9 @@ export function validateContents(
  */
 function validateUsername(username: string): boolean {
   return (
-    /[a-zA-Z0-9]/.test(username) && username.length > 2 && username.length < 20
+    /^[a-zA-Z0-9]+$/.test(username) &&
+    username.length >= 2 &&
+    username.length <= 20
   );
 }
 
@@ -39,10 +41,5 @@ function validateUsername(username: string): boolean {
  * @param password
  */
 export function validatePassword(password: string): boolean {
-  return (
-    /[A-Z]/.test(password) === true &&
-    /[a-z]/.test(password) === true &&
-    /\d/.test(password) === true &&
-    password.length > 12
-  );
+  return password.length >= 8 && password.length <= 65;
 }
