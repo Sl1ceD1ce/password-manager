@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import PasswordsContainer from "../components/PasswordsContainer";
+import PostsContainer from "../components/PostsContainer";
 import { Link } from "react-router-dom";
 import { Plus } from "iconoir-react";
 
@@ -32,7 +32,7 @@ export default function DashboardPage() {
       <div className="posts-container">
         {passwords.length > 0 &&
           passwords.map((post, index) => (
-            <PasswordsContainer key={index} {...post} />
+            <PostsContainer key={index} {...post} />
           ))}
       </div>
     </>

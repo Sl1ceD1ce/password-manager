@@ -112,7 +112,7 @@ form h1 {
   color: white;
 }
 
-.password-container {
+.password-form-container {
   position: relative;
 }
 
@@ -140,7 +140,6 @@ form h1 {
   outline: none;
   color: black;
 }
-
 
 .indexImage {
   align-items: center;
@@ -281,3 +280,5 @@ form h1 {
 .indexImage {
   align-self: center;
 }
+
+

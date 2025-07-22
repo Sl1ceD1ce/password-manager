@@ -47,7 +47,7 @@ export default function LoginPage() {
         value={username}
         onChange={(ev) => setUsername(ev.target.value)}
       />
-      <div className="password-container">
+      <div className="password-form-container">
         <input
           id="password"
           type={showPassword ? "text" : "password"}

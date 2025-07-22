@@ -5,7 +5,7 @@ const copyToClipboard = (text) => {
   navigator.clipboard.writeText(text);
 };
 
-export default function PasswordsContainer({ website, username, password }) {
+export default function PostsContainer({ website, username, password }) {
   const [visiblePasswords, setVisiblePasswords] = useState(new Set());
 
   const togglePasswordVisibility = (id) => {
@@ -26,7 +26,7 @@ export default function PasswordsContainer({ website, username, password }) {
         <div className="field-container">
           <a
             href={website}
-            className="field-value website-link"
+            className="field-value"
             target="_blank"
             rel="noopener noreferrer"
           >
