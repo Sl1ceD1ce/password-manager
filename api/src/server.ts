@@ -91,7 +91,7 @@ app.get("/profile", (req, res) => {
       res.json(info);
     });
   } catch (e) {
-    return res.status(400).json(req.cookies);
+    return res.status(401).json({ error: "unauthorised" });
   }
 });
 
@@ -139,7 +139,7 @@ app.get("/post", async (req, res) => {
     const userID = info.id;
     return res.json(await Post.find({ userID }));
   } catch (e) {
-    return res.status(400).json({ error: "invalid token" });
+    return res.status(401).json({ error: "invalid token" });
   }
 });
 
