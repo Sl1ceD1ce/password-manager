@@ -10,6 +10,7 @@ import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
 import { validateContents } from "./helpers.js";
 import * as dotenv from "dotenv";
+import aes256 from "aes256";
 
 dotenv.config();
 
@@ -28,15 +29,16 @@ app.use(cookieParser());
 app.use(json());
 
 // loading secrets and env variables
-const key = process.env.KEY;
+const apiKey = process.env.KEY;
 const secret = process.env.SECRET;
+const aesKey = process.env.AES_KEY;
 const saltRounds = 10;
 
-if (!key || !secret) {
+if (!apiKey || !secret || !aesKey) {
   throw new Error("Missing required environment variables: KEY and/or SECRET");
 }
 
-connect(key);
+connect(apiKey);
 
 app.post("/register", async (req, res) => {
   const { username } = req.body;
@@ -105,7 +107,7 @@ app.post("/logout", (req, res) => {
 
 // create a new password post
 app.post("/post", async (req, res) => {
-  const { website, username, password } = req.body;
+  let { website, username, password } = req.body;
   const { token } = req.cookies;
   // ensure check to validate website, username and password.
 
@@ -118,8 +120,10 @@ app.post("/post", async (req, res) => {
   } catch (e: any) {
     return res.status(400).json({ error: e.message });
   }
+  website = aes256.encrypt(aesKey, website);
+  username = aes256.encrypt(aesKey, username);
+  password = aes256.encrypt(aesKey, password);
 
-  // ensure to enrypt before storage
   try {
     const info = verify(token, secret) as UserPayload;
     const userID = info.id;
@@ -127,7 +131,7 @@ app.post("/post", async (req, res) => {
     await Post.create({ website, username, password, userID });
     return res.json("success");
   } catch (e: any) {
-    return res.status(400).json({ error: e.message });
+    return res.status(400).json({ error: "request was malformed or invalid" });
   }
 });
 
@@ -137,7 +141,18 @@ app.get("/post", async (req, res) => {
   try {
     const info = verify(token, secret) as UserPayload;
     const userID = info.id;
-    return res.json(await Post.find({ userID }));
+
+
+    let posts = await Post.find({ userID });
+
+    const decryptedPosts = posts.map((post) => ({
+      website: aes256.decrypt(aesKey, post.website),
+      username: aes256.decrypt(aesKey, post.username),
+      password: aes256.decrypt(aesKey, post.password),
+      _id: post._id,
+    }));
+
+    return res.json(decryptedPosts);
   } catch (e) {
     return res.status(401).json({ error: "invalid token" });
   }
@@ -146,9 +161,7 @@ app.get("/post", async (req, res) => {
 // edit a password post
 app.put("/post", async (req, res) => {
   const { token } = req.cookies;
-  const { postId, website, username, password } = req.body;
-
-  // ensure to ecnrypt before storage
+  let { postId, website, username, password } = req.body;
 
   const info = verify(token, secret) as UserPayload; // verify valid token
 
@@ -157,6 +170,10 @@ app.put("/post", async (req, res) => {
   } catch (e: any) {
     return res.status(400).json({ error: e.message });
   }
+
+  website = aes256.encrypt(aesKey, website);
+  username = aes256.encrypt(aesKey, username);
+  password = aes256.encrypt(aesKey, password);
 
   const postDoc = await Post.findOne({ _id: postId }); // find post
   if (info === null) {
