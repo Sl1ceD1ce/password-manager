@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import PostsContainer from "../components/PostsContainer";
 import { Link } from "react-router-dom";
 import { Plus } from "iconoir-react";
+import { Navigate } from "react-router-dom";
 
 export default function DashboardPage() {
   const [passwords, setPasswords] = useState([]);
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:4000/post", {
@@ -12,10 +14,18 @@ export default function DashboardPage() {
       method: "GET",
     }).then((response) => {
       response.json().then((posts) => {
-        setPasswords(posts);
+        if (response.status != 200) {
+          setRedirect(true);
+        } else {
+          setPasswords(posts);
+        }
       });
     });
   }, []);
+
+  if (redirect) {
+    return <Navigate to={"/login"} />;
+  }
 
   return (
     <>
