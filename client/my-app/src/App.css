@@ -257,7 +257,7 @@ form h1 {
   color: #ffffff;
 }
 
-.add-link {
+.add {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -269,8 +269,9 @@ form h1 {
   font-size: large;
 }
 
-.add-link:hover {
-  transform: scale(1.15);
+.add:hover {
+  background-color: #2a2a2a;
+  color: #ffffff;
 }
 
 .create-post-button {
@@ -280,5 +281,3 @@ form h1 {
 .indexImage {
   align-self: center;
 }
-
-

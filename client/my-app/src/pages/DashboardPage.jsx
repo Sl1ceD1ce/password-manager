@@ -32,7 +32,7 @@ export default function DashboardPage() {
       <div className="dashboard-container">
         <h2 className="header"> Passwords:</h2>
         <div className="create-post-button">
-          <Link to="/create" className="add-link">
+          <Link to="/create" className="add">
             <span>Add</span>
             <Plus color="white" />
           </Link>
