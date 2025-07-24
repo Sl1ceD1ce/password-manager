@@ -57,9 +57,13 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
+  if (typeof username !== "string" || typeof password !== "string") {
+    return res.status(400).json({ error: "Invalid input format" });
+  }
+
   const userDoc = await User.findOne({ username });
   if (userDoc === null) {
-    return res.status(400).json({ error: "invalid username" });
+    return res.status(400).json({ error: "invalid credentials" });
   } else if (bcrypt.compareSync(password, userDoc.password)) {
     sign(
       { username, id: userDoc._id },
@@ -109,7 +113,6 @@ app.post("/logout", (req, res) => {
 app.post("/post", async (req, res) => {
   let { website, username, password } = req.body;
   const { token } = req.cookies;
-  // ensure check to validate website, username and password.
 
   if (!token) {
     return res.status(401).json({ error: "No token provided" });
@@ -141,7 +144,6 @@ app.get("/post", async (req, res) => {
   try {
     const info = verify(token, secret) as UserPayload;
     const userID = info.id;
-
 
     let posts = await Post.find({ userID });
 

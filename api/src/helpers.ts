@@ -11,6 +11,14 @@ export function validateContents(
   username: string,
   password: string
 ) {
+  if (
+    typeof website !== "string" ||
+    typeof username !== "string" ||
+    typeof password !== "string"
+  ) {
+    throw new Error("Invalid input format");
+  }
+
   if (!validUrl.isWebUri(website)) {
     throw new Error("Invalid website");
   } else if (!validateUsername(username)) {
