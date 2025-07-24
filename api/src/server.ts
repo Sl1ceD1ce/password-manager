@@ -72,7 +72,7 @@ app.post("/login", async (req, res) => {
             httpOnly: true,
             secure: false, // use `true` if you're serving over HTTPS
             sameSite: "lax", // "none" if using HTTPS + cross-origin
-            maxAge: 60 * 60 * 1000, // 1 hour expiry time
+            maxAge: 30 * 60 * 1000, // 1 hour expiry time
           })
           .json({
             id: userDoc._id,
