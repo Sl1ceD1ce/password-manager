@@ -70,9 +70,9 @@ app.post("/login", async (req, res) => {
         res
           .cookie("token", token, {
             httpOnly: true,
-            secure: false, // use `true` if you're serving over HTTPS
-            sameSite: "lax", // "none" if using HTTPS + cross-origin
-            maxAge: 30 * 60 * 1000, // 1 hour expiry time
+            secure: false, // use `true` if you're serving over HTTPS (change if launched to production)
+            sameSite: "lax", // "none" if using HTTPS + cross-origin (change if launched to production)
+            maxAge: 30 * 60 * 1000, // 30 mins expiry time
           })
           .json({
             id: userDoc._id,
