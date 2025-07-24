@@ -1,6 +1,8 @@
 # Vault
 This is a password-manager constructed using the MERN stack (Mongodb, Express, React, Node.js) for the course COMP6841 Extended Cybersecurity Engineering for an undergraduate assignment.
 
+**Disclaimer this password manager is NOT to be used for storing real passwords.**
+
 There are several major components to my codebase that provide a certain level of security:
 
 1. Authentication through JWTS encrypted using SHA-512.
