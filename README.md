@@ -9,4 +9,4 @@ There are several major components to my codebase that provide a certain level o
 2. Parsing of user data to ensure malicious payloads are intercepted.
 3. Encryption of data at rest within the database through AES-256.
 4. Storage of keys in a seperate location to the database.
-5. Appropriate salting and encryption when storing passwords that do not require users to reaccess in plaintext through bcrypt.
+5. Appropriate salting and hashing when storing passwords that do not require users to reaccess in plaintext through bcrypt.
