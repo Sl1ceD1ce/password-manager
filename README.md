@@ -10,3 +10,11 @@ There are several major components to my codebase that provide a certain level o
 3. Encryption of data at rest within the database through AES-256.
 4. Storage of keys in a seperate location to the database.
 5. Appropriate salting and hashing when storing passwords that do not require users to reaccess in plaintext through bcrypt.
+
+Additional todos:
+- Implement delete and edit on the frontend side
+- Implement MFA
+- Rate limiters
+- Prevent cross site scripting attacks using html escape function
+- Utilise have I been pwned API to ensure that users are informed of data leakage
+- Implement a secure and truly random password generator
