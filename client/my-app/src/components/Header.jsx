@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../UserContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {

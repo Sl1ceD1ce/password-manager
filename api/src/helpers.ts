@@ -45,7 +45,7 @@ function validateUsername(username: string): boolean {
 
 /**
  * Ensures the password has a combination of lower + upper case letters.
- * Numbers and a length of at least 12 characters.
+ * Numbers and a length of at least 8 characters.
  * @param password
  */
 export function validatePassword(password: string): boolean {

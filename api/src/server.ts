@@ -113,7 +113,7 @@ app.post("/logout", (req, res) => {
 app.post("/post", async (req, res) => {
   let { website, username, password } = req.body;
   const { token } = req.cookies;
-
+  
   if (!token) {
     return res.status(401).json({ error: "No token provided" });
   }
@@ -141,6 +141,7 @@ app.post("/post", async (req, res) => {
 // get all passwords posts from database for a given user
 app.get("/post", async (req, res) => {
   const { token } = req.cookies;
+  
   try {
     const info = verify(token, secret) as UserPayload;
     const userID = info.id;
