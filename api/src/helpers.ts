@@ -11,6 +11,14 @@ export function validateContents(
   username: string,
   password: string
 ) {
+  if (
+    typeof website !== "string" ||
+    typeof username !== "string" ||
+    typeof password !== "string"
+  ) {
+    throw new Error("Invalid input format");
+  }
+
   if (!validUrl.isWebUri(website)) {
     throw new Error("Invalid website");
   } else if (!validateUsername(username)) {
@@ -37,7 +45,7 @@ function validateUsername(username: string): boolean {
 
 /**
  * Ensures the password has a combination of lower + upper case letters.
- * Numbers and a length of at least 12 characters.
+ * Numbers and a length of at least 8 characters.
  * @param password
  */
 export function validatePassword(password: string): boolean {

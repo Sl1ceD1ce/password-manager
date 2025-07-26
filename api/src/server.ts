@@ -57,9 +57,13 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
+  if (typeof username !== "string" || typeof password !== "string") {
+    return res.status(400).json({ error: "Invalid input format" });
+  }
+
   const userDoc = await User.findOne({ username });
   if (userDoc === null) {
-    return res.status(400).json({ error: "invalid username" });
+    return res.status(400).json({ error: "invalid credentials" });
   } else if (bcrypt.compareSync(password, userDoc.password)) {
     sign(
       { username, id: userDoc._id },
@@ -70,9 +74,9 @@ app.post("/login", async (req, res) => {
         res
           .cookie("token", token, {
             httpOnly: true,
-            secure: false, // use `true` if you're serving over HTTPS
-            sameSite: "lax", // "none" if using HTTPS + cross-origin
-            maxAge: 60 * 60 * 1000, // 1 hour expiry time
+            secure: false, // use `true` if you're serving over HTTPS (change if launched to production)
+            sameSite: "lax", // "none" if using HTTPS + cross-origin (change if launched to production)
+            maxAge: 30 * 60 * 1000, // 30 mins expiry time
           })
           .json({
             id: userDoc._id,
@@ -109,8 +113,7 @@ app.post("/logout", (req, res) => {
 app.post("/post", async (req, res) => {
   let { website, username, password } = req.body;
   const { token } = req.cookies;
-  // ensure check to validate website, username and password.
-
+  
   if (!token) {
     return res.status(401).json({ error: "No token provided" });
   }
@@ -138,10 +141,10 @@ app.post("/post", async (req, res) => {
 // get all passwords posts from database for a given user
 app.get("/post", async (req, res) => {
   const { token } = req.cookies;
+  
   try {
     const info = verify(token, secret) as UserPayload;
     const userID = info.id;
-
 
     let posts = await Post.find({ userID });
 
