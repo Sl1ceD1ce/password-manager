@@ -64,9 +64,9 @@ export default function PostsContainer({ website, username, password }) {
               onClick={() => togglePasswordVisibility(password)}
             >
               {visiblePasswords.has(password) ? (
-                <Eye size={14} />
-              ) : (
                 <EyeClosed size={14} />
+              ) : (
+                <Eye size={14} />
               )}
             </button>
             <button
