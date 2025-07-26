@@ -3,6 +3,8 @@ This is a password-manager constructed using the MERN stack (Mongodb, Express, R
 
 **Disclaimer this password manager is NOT to be used for storing real passwords.**
 
+Note since this project requires API keys and secrets you won't be able to run it yourself. However, you can cd into the client side and run **npm run dev** to try out the frontend on localhost.
+
 There are several major components to my codebase that provide a certain level of security:
 
 1. Authentication through JWTS encrypted using SHA-512.
