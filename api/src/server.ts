@@ -43,6 +43,11 @@ connect(apiKey);
 app.post("/register", async (req, res) => {
   const { username } = req.body;
   let { password } = req.body;
+
+  if (typeof username !== "string" || typeof password !== "string") {
+    return res.status(400).json({ error: "Invalid input format" });
+  }
+
   const salt = bcrypt.genSaltSync(saltRounds);
   password = bcrypt.hashSync(password, salt);
 
